@@ -1,4 +1,6 @@
-﻿using System.Globalization;
+﻿using System.Collections.Generic;
+using System.Globalization;
+using System.Linq;
 using System.Reflection;
 using TMPro;
 using UnityEngine;
@@ -37,115 +39,142 @@ namespace Selector.UserInterface
             _selectorMenu = new GameObject("Select Menu");
             _selectorMenu.transform.parent = parent.transform;
 
-            AttachTransform(_selectorMenu, 275, 175, 1, 1, 0, 0, 1, 1);
+            AttachTransform(_selectorMenu, 360, 175, 1, 1, 0, 0, 1, 1);
 
             var image = _selectorMenu.AddComponent<Image>();
             image.sprite = PersistentUI.Instance.Sprites.Background;
             image.type = Image.Type.Sliced;
             image.color = new Color(0.24f, 0.24f, 0.24f);
 
-            AddCheckbox(_selectorMenu.transform, "Select Note", "Select Note", new Vector2(0, -15),
+            AddCheckbox("Select Note", "Select Note", new Vector2(-105, -5),
                 Options.SelectNote, check => { Options.SelectNote = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Bomb", "Select Bomb", new Vector2(0, -30),
+            AddCheckbox("Select Bomb", "Select Bomb", new Vector2(-105, -20),
                 Options.SelectBomb, check => { Options.SelectBomb = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Event", "Select Event", new Vector2(0, -45),
+            AddCheckbox("Select Event", "Select Event", new Vector2(-105, -35),
                 Options.SelectEvent, check => { Options.SelectEvent = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Arc", "Select Arc", new Vector2(85, -15), Options.SelectEvent,
+            AddCheckbox("Select Arc", "Select Arc", new Vector2(-5, -5), Options.SelectArc,
                 check => { Options.SelectArc = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Chain", "Select Chain", new Vector2(85, -30),
-                Options.SelectObstacle, check => { Options.SelectChain = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Obstacle", "Select Obstacle", new Vector2(85, -45),
+            AddCheckbox("Select Chain", "Select Chain", new Vector2(-5, -20),
+                Options.SelectChain, check => { Options.SelectChain = check; });
+            AddCheckbox("Select Obstacle", "Select Obstacle", new Vector2(-5, -35),
                 Options.SelectObstacle, check => { Options.SelectObstacle = check; });
-
-            AddTextInput(_selectorMenu.transform, "Select Time Start", "Time", new Vector2(-25, -60),
-                Options.TimeStart.ToString(CultureInfo.InvariantCulture), value =>
+            
+            AddTextInput("Input Event Float Value Tolerance", "±",
+                new Vector2(-5, -55),
+                Options.TimeTolerance.ToString(CultureInfo.InvariantCulture), value =>
                 {
                     if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
-                            out var res)) Options.TimeStart = res;
+                            out var res))
+                        Options.TimeTolerance = res;
                 });
-            AddTextInput(_selectorMenu.transform, "Select Time End", "", new Vector2(35, -60),
+            AddTextInput("Select Time End", "to", new Vector2(-52.5f, -55),
                 Options.TimeEnd.ToString(CultureInfo.InvariantCulture), value =>
                 {
                     if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
                             out var res)) Options.TimeEnd = res;
                 });
-
-            AddLabel(_selectorMenu.transform, "Grid Label", "Grid", new Vector2(55, -85));
-            AddTextInput(_selectorMenu.transform, "Input Grid Color", "Color", new Vector2(65, -100),
-                Options.GridColor.ToString(), value =>
+            AddTextInput("Select Time Start", "", new Vector2(-105, -55),
+                Options.TimeStart.ToString(CultureInfo.InvariantCulture), value =>
                 {
-                    if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
-                        Options.GridColor = res;
+                    if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
+                            out var res)) Options.TimeStart = res;
                 });
-            AddTextInput(_selectorMenu.transform, "Input Grid Direction", "Direction", new Vector2(65, -120),
-                Options.GridDirection.ToString(), value =>
+            AddCheckbox("Select Time", "Time (Beat)", new Vector2(-145, -55),
+                Options.TimeSelect, check => { Options.TimeSelect = check; });
+            AddCheckbox("Select BPM Change", "Use BPM Change", new Vector2(-215, -55),
+                Options.TimeBpmChange, check => { Options.TimeBpmChange = check; });
+            
+            AddLabel("Grid Label", "Grid", new Vector2(-55, -75));
+            AddDropdown("Dropdown Grid Color", "", new Vector2(-5, -90),
+                Items.NoteColor, value =>
                 {
-                    if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
-                        Options.GridDirection = res;
+                    Options.GridColor = Items.NoteColor[value];
                 });
-            AddTextInput(_selectorMenu.transform, "Input Grid X", "X", new Vector2(65, -140),
+            AddDropdown("Dropdown Grid Direction", "", new Vector2(-5, -110),
+                Items.NoteDirection, value =>
+                {
+                    Options.GridDirection = Items.NoteDirection[value];
+                });
+            AddTextInput("Input Grid X", "", new Vector2(-62.5f, -130),
                 Options.GridX.ToString(), value =>
                 {
                     if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
                         Options.GridX = res;
                 });
-            AddTextInput(_selectorMenu.transform, "Input Grid Y", "Y", new Vector2(65, -160),
+            AddTextInput("Input Grid Y", "", new Vector2(-62.5f, -150),
                 Options.GridY.ToString(), value =>
                 {
                     if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
                         Options.GridY = res;
                 });
-            AddCheckbox(_selectorMenu.transform, "Select Grid Color", "", new Vector2(170, -105),
+            AddCheckbox("Select Grid Color", "Color", new Vector2(-100, -90),
                 Options.GridColorSelect, check => { Options.GridColorSelect = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Grid Direction", "", new Vector2(170, -125),
+            AddCheckbox("Select Grid Direction", "Direction", new Vector2(-100, -110),
                 Options.GridDirectionSelect, check => { Options.GridDirectionSelect = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Grid X", "", new Vector2(170, -145),
+            AddCheckbox("Select Grid X", "X", new Vector2(-100, -130),
                 Options.GridXSelect, check => { Options.GridXSelect = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Grid Y", "", new Vector2(170, -165),
+            AddCheckbox("Select Grid Y", "Y", new Vector2(-100, -150),
                 Options.GridYSelect, check => { Options.GridYSelect = check; });
-
-            AddLabel(_selectorMenu.transform, "Event Label", "Event", new Vector2(-55, -85));
-            AddTextInput(_selectorMenu.transform, "Input Event Type", "Type", new Vector2(-45, -100),
-                Options.EventType.ToString(), value =>
+            
+            AddLabel("Event Label", "Event", new Vector2(-255, -75));
+            AddDropdown("Dropdown Event Value Color", "", new Vector2(-195, -90),
+                Items.EventType, value =>
+                {
+                    Options.EventType = Items.EventType[value];
+                });
+            AddTextInput("Input Event Type", "", new Vector2(-157.5f, -90),
+                Options.EventTypeCustom.ToString(), value =>
                 {
                     if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
-                        Options.EventType = res;
+                        Options.EventTypeCustom = res;
                 });
-            AddTextInput(_selectorMenu.transform, "Input Event Value", "Value", new Vector2(-45, -120),
-                Options.EventValue.ToString(), value =>
+            AddDropdown("Dropdown Event Value Color", "", new Vector2(-195, -110),
+                Items.EventValueColor, value =>
+                {
+                    Options.EventValueColor = Items.EventValueColor[value];
+                });
+            AddTextInput("Input Event Value", "", new Vector2(-157.5f, -110),
+                Options.EventValueCustom.ToString(), value =>
                 {
                     if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
-                        Options.EventValue = res;
+                        Options.EventValueCustom = res;
                 });
-            AddTextInput(_selectorMenu.transform, "Input Event Float Value", "Float Value", new Vector2(-45, -140),
-                Options.EventFloatValue.ToString(CultureInfo.InvariantCulture), value =>
+            AddDropdown("Dropdown Event Value Type", "", new Vector2(-195, -130),
+                Items.EventValueType, value =>
                 {
-                    if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
-                            out var res))
-                        Options.EventFloatValue = res;
+                    Options.EventValueType = Items.EventValueType[value];
                 });
-            AddTextInput(_selectorMenu.transform, "Input Event Float Value Tolerance", "Float Value Tolerance",
-                new Vector2(-45, -160),
+            AddTextInput("Input Event Float Value Tolerance", "±",
+                new Vector2(-205, -150),
                 Options.EventFloatValueTolerance.ToString(CultureInfo.InvariantCulture), value =>
                 {
                     if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
                             out var res))
                         Options.EventFloatValueTolerance = res;
                 });
-            AddCheckbox(_selectorMenu.transform, "Select Event Type", "", new Vector2(60, -105),
+            AddTextInput("Input Event Float Value", "", new Vector2(-252.5f, -150),
+                Options.EventFloatValue.ToString(CultureInfo.InvariantCulture), value =>
+                {
+                    if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
+                            out var res))
+                        Options.EventFloatValue = res;
+                });
+            AddCheckbox("Select Event Type", "Type", new Vector2(-290, -90),
                 Options.EventTypeSelect, check => { Options.EventTypeSelect = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Event Value", "", new Vector2(60, -125),
-                Options.EventValueSelect, check => { Options.EventValueSelect = check; });
-            AddCheckbox(_selectorMenu.transform, "Select Event Float Value", "", new Vector2(60, -145),
+            AddCheckbox("Select Event Value Color", "Value", new Vector2(-290, -110),
+                Options.EventValueSelectColor, check => { Options.EventValueSelectColor = check; });
+            AddCheckbox("Select Event Value Type", "", new Vector2(-290, -130),
+                Options.EventValueSelectType, check => { Options.EventValueSelectType = check; });
+            AddCheckbox("Select Event Float Value", "Float Value", new Vector2(-290, -150),
                 Options.EventFloatValueSelect, check => { Options.EventFloatValueSelect = check; });
 
-            AddButton(_selectorMenu.transform, "Perform Select", "Select", new Vector2(-105, -15),
+            AddButton("Perform Select", "Select", new Vector2(-195, -5),
                 () => { _selector.Select(); });
-            AddButton(_selectorMenu.transform, "Perform Deselect", "Deselect", new Vector2(-105, -40),
+            AddButton("Perform Deselect", "Deselect", new Vector2(-195, -30),
                 () => { _selector.Deselect(); });
-            AddButton(_selectorMenu.transform, "Perform Select All", "Select All", new Vector2(-105, -65),
+            AddButton("Perform Select All", "Select All", new Vector2(-275, -5),
                 () => { _selector.SelectAll(); });
-            AddButton(_selectorMenu.transform, "Perform Deselect All", "Deselect All", new Vector2(-105, -90),
+            AddButton("Perform Deselect All", "Deselect All", new Vector2(-275, -30),
                 () => { _selector.DeselectAll(); });
 
             _selectorMenu.SetActive(false);
@@ -154,45 +183,44 @@ namespace Selector.UserInterface
 
         // i ended up copying Top_Cat's CM-JS UI helper, too useful to make my own tho
         // after askin TC if it's one of the only way, he let me use this
-        private void AddButton(Transform parent, string title, string text, Vector2 pos, UnityAction onClick)
+        private void AddButton(string title, string text, Vector2 pos, UnityAction onClick)
         {
-            var button = Object.Instantiate(PersistentUI.Instance.ButtonPrefab, parent);
-            MoveTransform(button.transform, 60, 25, 0.5f, 1, pos.x, pos.y);
+            var button = Object.Instantiate(PersistentUI.Instance.ButtonPrefab, _selectorMenu.transform);
+            MoveTransform(button.transform, 80, 25, 1, 1, pos.x, pos.y);
 
             button.name = title;
-            button.Button.onClick.AddListener(onClick);
-
             button.SetText(text);
             button.Text.enableAutoSizing = false;
-            button.Text.fontSize = 12;
+            button.Text.fontSize = 14;
+            button.Button.onClick.AddListener(onClick);
         }
 
-        private void AddLabel(Transform parent, string title, string text, Vector2 pos, Vector2? size = null)
+        private void AddLabel(string title, string text, Vector2 pos, Vector2? size = null)
         {
             var entryLabel = new GameObject(title + " Label", typeof(TextMeshProUGUI));
             var rectTransform = (RectTransform)entryLabel.transform;
-            rectTransform.SetParent(parent);
+            rectTransform.SetParent(_selectorMenu.transform);
 
-            MoveTransform(rectTransform, 110, 24, 0.5f, 1, pos.x, pos.y);
+            MoveTransform(rectTransform, 100, 20, 1, 1, pos.x, pos.y);
             var textComponent = entryLabel.GetComponent<TextMeshProUGUI>();
 
             textComponent.name = title;
             textComponent.font = PersistentUI.Instance.ButtonPrefab.Text.font;
             textComponent.alignment = TextAlignmentOptions.Center;
-            textComponent.fontSize = 16;
+            textComponent.fontSize = 14;
             textComponent.text = text;
         }
 
-        private void AddTextInput(Transform parent, string title, string text, Vector2 pos, string value,
+        private void AddTextInput(string title, string text, Vector2 pos, string value,
             UnityAction<string> onChange)
         {
             if (!IsNullOrEmpty(text))
             {
                 var entryLabel = new GameObject(title + " Label", typeof(TextMeshProUGUI));
                 var rectTransform = (RectTransform)entryLabel.transform;
-                rectTransform.SetParent(parent);
+                rectTransform.SetParent(_selectorMenu.transform);
 
-                MoveTransform(rectTransform, 50, 16, 0.5f, 1, pos.x - 27.5f, pos.y);
+                MoveTransform(rectTransform, 60, 16, 1, 1, pos.x - 40, pos.y - 2);
                 var textComponent = entryLabel.GetComponent<TextMeshProUGUI>();
 
                 textComponent.name = title;
@@ -202,26 +230,55 @@ namespace Selector.UserInterface
                 textComponent.text = text;
             }
 
-            var textInput = Object.Instantiate(PersistentUI.Instance.TextInputPrefab, parent);
-            MoveTransform(textInput.transform, 55, 20, 0.5f, 1, pos.x + 27.5f, pos.y);
+            var textInput = Object.Instantiate(PersistentUI.Instance.TextInputPrefab, _selectorMenu.transform);
+            MoveTransform(textInput.transform, 36, 20, 1, 1, pos.x, pos.y);
             textInput.GetComponent<Image>().pixelsPerUnitMultiplier = 3;
             textInput.InputField.text = value;
             textInput.InputField.onFocusSelectAll = false;
             textInput.InputField.textComponent.alignment = TextAlignmentOptions.Left;
             textInput.InputField.textComponent.fontSize = 10;
-
             textInput.InputField.onValueChanged.AddListener(onChange);
         }
 
-        private void AddCheckbox(Transform parent, string title, string text, Vector2 pos, bool value,
+        private void AddCheckbox(string title, string text, Vector2 pos, bool value,
             UnityAction<bool> onClick)
         {
             if (!IsNullOrEmpty(text))
             {
                 var entryLabel = new GameObject(title + " Label", typeof(TextMeshProUGUI));
                 var rectTransform = (RectTransform)entryLabel.transform;
-                rectTransform.SetParent(parent);
-                MoveTransform(rectTransform, 80, 16, 0.5f, 1, pos.x + 10, pos.y + 5);
+                rectTransform.SetParent(_selectorMenu.transform);
+                MoveTransform(rectTransform, 80, 16, 1, 1, pos.x - 18, pos.y - 2);
+                var textComponent = entryLabel.GetComponent<TextMeshProUGUI>();
+
+                textComponent.name = title;
+                textComponent.font = PersistentUI.Instance.ButtonPrefab.Text.font;
+                textComponent.alignment = TextAlignmentOptions.Right;
+                textComponent.fontSize = 12;
+                textComponent.text = text;
+            }
+
+            var original = GameObject.Find("Strobe Generator").GetComponentInChildren<Toggle>(true);
+            var toggleObject = Object.Instantiate(original, _selectorMenu.transform.transform);
+            MoveTransform(toggleObject.transform, 16, 16, 1, 1, pos.x, pos.y - 2);
+
+            var toggleComponent = toggleObject.GetComponent<Toggle>();
+            var colorBlock = toggleComponent.colors;
+            colorBlock.normalColor = Color.white;
+            toggleComponent.colors = colorBlock;
+            toggleComponent.isOn = value;
+            toggleComponent.onValueChanged.AddListener(onClick);
+        }
+
+        private void AddDropdown(string title, string text, Vector2 pos, List<string> listStr,
+            UnityAction<int> onChange)
+        {
+            if (!IsNullOrEmpty(text))
+            {
+                var entryLabel = new GameObject(title + " Label", typeof(TextMeshProUGUI));
+                var rectTransform = (RectTransform)entryLabel.transform;
+                rectTransform.SetParent(_selectorMenu.transform);
+                MoveTransform(rectTransform, 60, 16, 1, 1, pos.x - 100, pos.y - 2);
                 var textComponent = entryLabel.GetComponent<TextMeshProUGUI>();
 
                 textComponent.name = title;
@@ -231,42 +288,33 @@ namespace Selector.UserInterface
                 textComponent.text = text;
             }
 
-            var original = GameObject.Find("Strobe Generator").GetComponentInChildren<Toggle>(true);
-            var toggleObject = Object.Instantiate(original, parent.transform);
-            MoveTransform(toggleObject.transform, 100, 25, 0.5f, 1, pos.x, pos.y);
-
-            var toggleComponent = toggleObject.GetComponent<Toggle>();
-            var colorBlock = toggleComponent.colors;
-            colorBlock.normalColor = Color.white;
-            toggleComponent.colors = colorBlock;
-            toggleComponent.isOn = value;
-
-            toggleComponent.onValueChanged.AddListener(onClick);
+            var dropdown = Object.Instantiate(PersistentUI.Instance.DropdownPrefab, _selectorMenu.transform.transform);
+            MoveTransform(dropdown.transform, 95, 20, 1, 1, pos.x, pos.y);
+            dropdown.SetOptions(listStr);
+            dropdown.Dropdown.onValueChanged.AddListener(onChange);
         }
 
-        private RectTransform AttachTransform(GameObject obj, float sizeX, float sizeY, float anchorX, float anchorY,
-            float anchorPosX, float anchorPosY, float pivotX = 0.5f, float pivotY = 0.5f)
+        private static void AttachTransform(GameObject obj, float sizeX, float sizeY, float anchorX, float anchorY,
+            float anchorPosX, float anchorPosY, float pivotX, float pivotY = 0.5f)
         {
             var rectTransform = obj.AddComponent<RectTransform>();
             rectTransform.localScale = new Vector3(1, 1, 1);
             rectTransform.sizeDelta = new Vector2(sizeX, sizeY);
             rectTransform.pivot = new Vector2(pivotX, pivotY);
             rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(anchorX, anchorY);
-            rectTransform.anchoredPosition = new Vector3(anchorPosX, anchorPosY, 0);
-
-            return rectTransform;
+            rectTransform.anchoredPosition = new Vector2(anchorPosX, anchorPosY);
         }
 
-        private void MoveTransform(Transform transform, float sizeX, float sizeY, float anchorX, float anchorY,
-            float anchorPosX, float anchorPosY, float pivotX = 0.5f, float pivotY = 0.5f)
+        private static void MoveTransform(Transform transform, float sizeX, float sizeY, float anchorX, float anchorY,
+            float anchorPosX, float anchorPosY)
         {
             if (!(transform is RectTransform rectTransform)) return;
 
             rectTransform.localScale = new Vector3(1, 1, 1);
             rectTransform.sizeDelta = new Vector2(sizeX, sizeY);
-            rectTransform.pivot = new Vector2(pivotX, pivotY);
+            rectTransform.pivot = new Vector2(1, 1);
             rectTransform.anchorMin = rectTransform.anchorMax = new Vector2(anchorX, anchorY);
-            rectTransform.anchoredPosition = new Vector3(anchorPosX, anchorPosY, 0);
+            rectTransform.anchoredPosition = new Vector2(anchorPosX, anchorPosY);
         }
     }
 }
