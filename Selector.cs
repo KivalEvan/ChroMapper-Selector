@@ -373,44 +373,48 @@ namespace Selector
 
         private void FilterValue(ref List<BaseEvent> events)
         {
-            if (!Options.EventValueSelectColor) return;
-            switch (Options.EventValueColor)
+            if (Options.EventValueColorSelect)
             {
-                case "Blue":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsBlue));
-                    break;
-                case "Red":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsRed));
-                    break;
-                case "White":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsWhite)); 
-                    break; 
-                case "Unknown":
-                    events = new List<BaseEvent>(events.Where(obj => obj.Value < 0 || obj.Value > 12));
-                    break;
-                case "Custom":
-                    events = new List<BaseEvent>(events.Where(obj => obj.Value == Options.EventValueCustom));
-                    break;
+                switch (Options.EventValueColor)
+                {
+                    case "Blue":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsBlue));
+                        break;
+                    case "Red":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsRed));
+                        break;
+                    case "White":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsWhite));
+                        break;
+                    case "Unknown":
+                        events = new List<BaseEvent>(events.Where(obj => obj.Value < 0 || obj.Value > 12));
+                        break;
+                    case "Custom":
+                        events = new List<BaseEvent>(events.Where(obj => obj.Value == Options.EventValueCustom));
+                        break;
+                }
             }
             
-            if (!Options.EventValueSelectType || Options.EventValueColor == "Custom") return;
-            switch (Options.EventValueType)
+            if (Options.EventValueTypeSelect)
             {
-                case "Off":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsOff));
-                    break;
-                case "On":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsOn));
-                    break;
-                case "Flash":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsFlash)); 
-                    break; 
-                case "Fade":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsFade));
-                    break;
-                case "Transition":
-                    events = new List<BaseEvent>(events.Where(obj => obj.IsTransition));
-                    break;
+                switch (Options.EventValueType)
+                {
+                    case "Off":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsOff));
+                        break;
+                    case "On":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsOn));
+                        break;
+                    case "Flash":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsFlash));
+                        break;
+                    case "Fade":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsFade));
+                        break;
+                    case "Transition":
+                        events = new List<BaseEvent>(events.Where(obj => obj.IsTransition));
+                        break;
+                }
             }
         }
 

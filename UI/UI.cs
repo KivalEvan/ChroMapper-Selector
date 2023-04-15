@@ -162,9 +162,9 @@ namespace Selector.UserInterface
             AddCheckbox("Select Event Type", "Type", new Vector2(-290, -90),
                 Options.EventTypeSelect, check => { Options.EventTypeSelect = check; });
             AddCheckbox("Select Event Value Color", "Value", new Vector2(-290, -110),
-                Options.EventValueSelectColor, check => { Options.EventValueSelectColor = check; });
+                Options.EventValueColorSelect, check => { Options.EventValueColorSelect = check; });
             AddCheckbox("Select Event Value Type", "", new Vector2(-290, -130),
-                Options.EventValueSelectType, check => { Options.EventValueSelectType = check; });
+                Options.EventValueTypeSelect, check => { Options.EventValueTypeSelect = check; });
             AddCheckbox("Select Event Float Value", "Float Value", new Vector2(-290, -150),
                 Options.EventFloatValueSelect, check => { Options.EventFloatValueSelect = check; });
 

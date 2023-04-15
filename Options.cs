@@ -76,8 +76,8 @@ namespace Selector
         public static int GridY { set; get; } = 0;
 
         public static bool EventTypeSelect { set; get; } = false;
-        public static bool EventValueSelectColor { set; get; } = false;
-        public static bool EventValueSelectType { set; get; } = false;
+        public static bool EventValueColorSelect { set; get; } = false;
+        public static bool EventValueTypeSelect { set; get; } = false;
         public static bool EventFloatValueSelect { set; get; } = false;
         public static string EventType { set; get; } = Items.EventType[0];
         public static int EventTypeCustom { set; get; } = 0;
