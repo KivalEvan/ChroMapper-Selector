@@ -145,19 +145,15 @@ namespace Selector
         private float _adjustTimeEnd = 0;
         private bool ObjectFilterTime(BaseObject obj)
         {
-            return obj.Time >= _adjustTimeStart && obj.Time <= _adjustTimeEnd;
+            return obj.JsonTime >= _adjustTimeStart && obj.JsonTime <= _adjustTimeEnd;
         }
 
         private void FilterTime(ref List<BaseNote> notes, ref List<BaseBombNote> bombs, ref List<BaseArc> arcs,
             ref List<BaseChain> chains, ref List<BaseEvent> events, ref List<BaseObstacle> obstacles)
         {
             if (!Options.TimeSelect) return;
-            _adjustTimeStart = (Options.TimeBpmChange
-                ? _bpmGridContainer.LocalBeatsToSongBeats(Options.TimeStart, 0)
-                : Options.TimeStart) - Options.TimeTolerance;
-            _adjustTimeEnd = (Options.TimeBpmChange
-                ? _bpmGridContainer.LocalBeatsToSongBeats(Options.TimeEnd, 0)
-                : Options.TimeEnd) + Options.TimeTolerance;
+            _adjustTimeStart = Options.TimeStart - Options.TimeTolerance;
+            _adjustTimeEnd = Options.TimeEnd + Options.TimeTolerance;
             
             notes = new List<BaseNote>(notes.Where(ObjectFilterTime));
             bombs = new List<BaseBombNote>(bombs.Where(ObjectFilterTime));

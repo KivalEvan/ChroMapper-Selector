@@ -15,7 +15,6 @@ namespace Selector.UserInterface
         private readonly ExtensionButton _extensionBtn = new ExtensionButton();
         private readonly Selector _selector;
         private GameObject _selectorMenu;
-
         public UI(Selector selector)
         {
             _selector = selector;
@@ -81,8 +80,6 @@ namespace Selector.UserInterface
                 });
             AddCheckbox("Select Time", "Time (Beat)", new Vector2(-145, -55),
                 Options.TimeSelect, check => { Options.TimeSelect = check; });
-            AddCheckbox("Select BPM Change", "Use BPM Change", new Vector2(-215, -55),
-                Options.TimeBpmChange, check => { Options.TimeBpmChange = check; });
             
             AddLabel("Grid Label", "Grid", new Vector2(-55, -75));
             AddDropdown("Dropdown Grid Color", "", new Vector2(-5, -90),

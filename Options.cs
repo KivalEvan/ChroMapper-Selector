@@ -64,7 +64,6 @@ namespace Selector
         public static float TimeEnd { set; get; } = 999.0f;
         public static float TimeTolerance { set; get; } = 0.001f;
         public static bool TimeSelect { set; get; } = true;
-        public static bool TimeBpmChange { set; get; } = true;
 
         public static bool GridColorSelect { set; get; } = false;
         public static bool GridDirectionSelect { set; get; } = false;
