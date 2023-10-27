@@ -61,12 +61,13 @@ namespace Selector
             FilterValue(ref events);
             FilterFloatValue(ref events);
 
-            notes.ForEach(n => { SelectionController.Select(n, true); });
-            bombs.ForEach(n => { SelectionController.Select(n, true); });
-            arcs.ForEach(o => { SelectionController.Select(o, true); });
-            chains.ForEach(o => { SelectionController.Select(o, true); });
-            events.ForEach(e => { SelectionController.Select(e, true); });
-            obstacles.ForEach(o => { SelectionController.Select(o, true); });
+            notes.ForEach(n => { SelectionController.Select(n, true, false, false); });
+            bombs.ForEach(n => { SelectionController.Select(n, true, false, false); });
+            arcs.ForEach(o => { SelectionController.Select(o, true, false, false); });
+            chains.ForEach(o => { SelectionController.Select(o, true, false, false); });
+            events.ForEach(e => { SelectionController.Select(e, true, false, false); });
+            obstacles.ForEach(o => { SelectionController.Select(o, true, false, false); });
+            SelectionController.SelectionChangedEvent?.Invoke();
         }
 
         public void Deselect()
@@ -88,12 +89,13 @@ namespace Selector
             FilterValue(ref events);
             FilterFloatValue(ref events);
 
-            notes.ForEach(n => { SelectionController.Deselect(n); });
-            bombs.ForEach(n => { SelectionController.Deselect(n); });
-            arcs.ForEach(o => { SelectionController.Deselect(o); });
-            chains.ForEach(o => { SelectionController.Deselect(o); });
-            events.ForEach(e => { SelectionController.Deselect(e); });
-            obstacles.ForEach(o => { SelectionController.Deselect(o); });
+            notes.ForEach(n => { SelectionController.Deselect(n, false); });
+            bombs.ForEach(n => { SelectionController.Deselect(n, false); });
+            arcs.ForEach(o => { SelectionController.Deselect(o, false); });
+            chains.ForEach(o => { SelectionController.Deselect(o, false); });
+            events.ForEach(e => { SelectionController.Deselect(e, false); });
+            obstacles.ForEach(o => { SelectionController.Deselect(o, false); });
+            SelectionController.SelectionChangedEvent?.Invoke();
         }
 
         public void SelectAll()
@@ -106,12 +108,13 @@ namespace Selector
             var obstacles = new List<BaseObstacle>();
             GrabAll(ref notes, ref bombs, ref arcs, ref chains, ref events, ref obstacles);
 
-            notes.ForEach(n => { SelectionController.Select(n, true); });
-            bombs.ForEach(n => { SelectionController.Select(n, true); });
-            arcs.ForEach(o => { SelectionController.Select(o, true); });
-            chains.ForEach(o => { SelectionController.Select(o, true); });
-            events.ForEach(e => { SelectionController.Select(e, true); });
-            obstacles.ForEach(o => { SelectionController.Select(o, true); });
+            notes.ForEach(n => { SelectionController.Select(n, true, false, false); });
+            bombs.ForEach(n => { SelectionController.Select(n, true, false, false); });
+            arcs.ForEach(o => { SelectionController.Select(o, true, false, false); });
+            chains.ForEach(o => { SelectionController.Select(o, true, false, false); });
+            events.ForEach(e => { SelectionController.Select(e, true, false, false); });
+            obstacles.ForEach(o => { SelectionController.Select(o, true, false, false); });
+            SelectionController.SelectionChangedEvent?.Invoke();
         }
 
         public void DeselectAll()
