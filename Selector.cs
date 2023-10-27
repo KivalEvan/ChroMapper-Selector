@@ -45,7 +45,7 @@ namespace Selector
         public void Select()
         {
             var notes = new List<BaseNote>();
-            var bombs = new List<BaseBombNote>();
+            var bombs = new List<BaseNote>();
             var arcs = new List<BaseArc>();
             var chains = new List<BaseChain>();
             var events = new List<BaseEvent>();
@@ -73,7 +73,7 @@ namespace Selector
         public void Deselect()
         {
             var notes = new List<BaseNote>();
-            var bombs = new List<BaseBombNote>();
+            var bombs = new List<BaseNote>();
             var arcs = new List<BaseArc>();
             var chains = new List<BaseChain>();
             var events = new List<BaseEvent>();
@@ -101,7 +101,7 @@ namespace Selector
         public void SelectAll()
         {
             var notes = new List<BaseNote>();
-            var bombs = new List<BaseBombNote>();
+            var bombs = new List<BaseNote>();
             var arcs = new List<BaseArc>();
             var chains = new List<BaseChain>();
             var events = new List<BaseEvent>();
@@ -122,16 +122,16 @@ namespace Selector
             SelectionController.DeselectAll();
         }
 
-        private void GrabAll(ref List<BaseNote> notes, ref List<BaseBombNote> bombs, ref List<BaseArc> arcs,
+        private void GrabAll(ref List<BaseNote> notes, ref List<BaseNote> bombs, ref List<BaseArc> arcs,
             ref List<BaseChain> chains, ref List<BaseEvent> events, ref List<BaseObstacle> obstacles)
         {
             notes = Options.SelectNote
                 ? _noteGridContainer.LoadedObjects.Cast<BaseNote>().Where(n => n.Type != 3).ToList()
                 : new List<BaseNote>();
             bombs = Options.SelectBomb
-                ? _noteGridContainer.LoadedObjects.Cast<BaseNote>().Where(n => n.Type == 3).Cast<BaseBombNote>()
+                ? _noteGridContainer.LoadedObjects.Cast<BaseNote>().Where(n => n.Type == 3).Cast<BaseNote>()
                     .ToList()
-                : new List<BaseBombNote>();
+                : new List<BaseNote>();
             arcs = Options.SelectArc ? _arcGridContainer.LoadedObjects.Cast<BaseArc>().ToList() : new List<BaseArc>();
             chains = Options.SelectChain
                 ? _chainsGridContainer.LoadedObjects.Cast<BaseChain>().ToList()
@@ -151,7 +151,7 @@ namespace Selector
             return obj.JsonTime >= _adjustTimeStart && obj.JsonTime <= _adjustTimeEnd;
         }
 
-        private void FilterTime(ref List<BaseNote> notes, ref List<BaseBombNote> bombs, ref List<BaseArc> arcs,
+        private void FilterTime(ref List<BaseNote> notes, ref List<BaseNote> bombs, ref List<BaseArc> arcs,
             ref List<BaseChain> chains, ref List<BaseEvent> events, ref List<BaseObstacle> obstacles)
         {
             if (!Options.TimeSelect) return;
@@ -159,7 +159,7 @@ namespace Selector
             _adjustTimeEnd = Options.TimeEnd + Options.TimeTolerance;
             
             notes = new List<BaseNote>(notes.Where(ObjectFilterTime));
-            bombs = new List<BaseBombNote>(bombs.Where(ObjectFilterTime));
+            bombs = new List<BaseNote>(bombs.Where(ObjectFilterTime));
             arcs = new List<BaseArc>(arcs.Where(ObjectFilterTime));
             chains = new List<BaseChain>(chains.Where(ObjectFilterTime));
             events = new List<BaseEvent>(events.Where(ObjectFilterTime));
@@ -254,12 +254,12 @@ namespace Selector
             return obj.PosX == Options.GridX;
         }
 
-        private void FilterX(ref List<BaseNote> notes, ref List<BaseBombNote> bombs, ref List<BaseArc> arcs,
+        private void FilterX(ref List<BaseNote> notes, ref List<BaseNote> bombs, ref List<BaseArc> arcs,
             ref List<BaseChain> chains, ref List<BaseObstacle> obstacles)
         {
             if (!Options.GridXSelect) return;
             notes = new List<BaseNote>(notes.Where(GridFilterX));
-            bombs = new List<BaseBombNote>(bombs.Where(GridFilterX));
+            bombs = new List<BaseNote>(bombs.Where(GridFilterX));
             arcs = new List<BaseArc>(arcs.Where(GridFilterX));
             chains = new List<BaseChain>(chains.Where(GridFilterX));
             obstacles = new List<BaseObstacle>(obstacles.Where(GridFilterX));
@@ -270,12 +270,12 @@ namespace Selector
             return obj.PosY == Options.GridY;
         }
 
-        private void FilterY(ref List<BaseNote> notes, ref List<BaseBombNote> bombs, ref List<BaseArc> arcs,
+        private void FilterY(ref List<BaseNote> notes, ref List<BaseNote> bombs, ref List<BaseArc> arcs,
             ref List<BaseChain> chains, ref List<BaseObstacle> obstacles)
         {
             if (!Options.GridYSelect) return;
             notes = new List<BaseNote>(notes.Where(GridFilterY));
-            bombs = new List<BaseBombNote>(bombs.Where(GridFilterY));
+            bombs = new List<BaseNote>(bombs.Where(GridFilterY));
             arcs = new List<BaseArc>(arcs.Where(GridFilterY));
             chains = new List<BaseChain>(chains.Where(GridFilterY));
             obstacles = new List<BaseObstacle>(obstacles.Where(GridFilterY));
