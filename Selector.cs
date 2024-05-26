@@ -126,21 +126,21 @@ namespace Selector
             ref List<BaseChain> chains, ref List<BaseEvent> events, ref List<BaseObstacle> obstacles)
         {
             notes = Options.SelectNote
-                ? _noteGridContainer.LoadedObjects.Cast<BaseNote>().Where(n => n.Type != 3).ToList()
+                ? _noteGridContainer.MapObjects.Where(n => n.Type != 3).ToList()
                 : new List<BaseNote>();
             bombs = Options.SelectBomb
-                ? _noteGridContainer.LoadedObjects.Cast<BaseNote>().Where(n => n.Type == 3).Cast<BaseNote>()
+                ? _noteGridContainer.MapObjects.Where(n => n.Type == 3).Cast<BaseNote>()
                     .ToList()
                 : new List<BaseNote>();
-            arcs = Options.SelectArc ? _arcGridContainer.LoadedObjects.Cast<BaseArc>().ToList() : new List<BaseArc>();
+            arcs = Options.SelectArc ? _arcGridContainer.MapObjects.ToList() : new List<BaseArc>();
             chains = Options.SelectChain
-                ? _chainsGridContainer.LoadedObjects.Cast<BaseChain>().ToList()
+                ? _chainsGridContainer.MapObjects.ToList()
                 : new List<BaseChain>();
             events = Options.SelectEvent
-                ? _eventGridContainer.LoadedObjects.Cast<BaseEvent>().ToList()
+                ? _eventGridContainer.MapObjects.ToList()
                 : new List<BaseEvent>();
             obstacles = Options.SelectObstacle
-                ? _obstacleGridContainer.LoadedObjects.Cast<BaseObstacle>().ToList()
+                ? _obstacleGridContainer.MapObjects.ToList()
                 : new List<BaseObstacle>();
         }
 
