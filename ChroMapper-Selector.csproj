@@ -1,41 +1,36 @@
-﻿<?xml version="1.0" encoding="utf-8"?>
-<Project ToolsVersion="15.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
-    <Import Project="$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props" Condition="Exists('$(MSBuildExtensionsPath)\$(MSBuildToolsVersion)\Microsoft.Common.props')"/>
+﻿<Project Sdk="Microsoft.NET.Sdk">
+    
     <PropertyGroup>
-        <Configuration Condition=" '$(Configuration)' == '' ">Debug</Configuration>
-        <Platform Condition=" '$(Platform)' == '' ">AnyCPU</Platform>
         <ProjectGuid>{7C003883-75FA-41E2-9A67-95195FB9FE68}</ProjectGuid>
         <OutputType>Library</OutputType>
-        <AppDesignerFolder>Properties</AppDesignerFolder>
         <RootNamespace>Selector</RootNamespace>
         <AssemblyName>Selector</AssemblyName>
-        <TargetFrameworkVersion>v4.8</TargetFrameworkVersion>
-        <FileAlignment>512</FileAlignment>
-        <Deterministic>true</Deterministic>
+        <TargetFramework>net48</TargetFramework>
+        <LangVersion>13</LangVersion>
+        <Nullable>warnings</Nullable>
     </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Debug|AnyCPU' ">
-        <DebugSymbols>true</DebugSymbols>
-        <DebugType>full</DebugType>
-        <Optimize>false</Optimize>
-        <OutputPath>bin\Debug\</OutputPath>
-        <DefineConstants>DEBUG;TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
-    <PropertyGroup Condition=" '$(Configuration)|$(Platform)' == 'Release|AnyCPU' ">
-        <DebugType>pdbonly</DebugType>
-        <Optimize>true</Optimize>
-        <OutputPath>bin\Release\</OutputPath>
-        <DefineConstants>TRACE</DefineConstants>
-        <ErrorReport>prompt</ErrorReport>
-        <WarningLevel>4</WarningLevel>
-    </PropertyGroup>
+    
     <ItemGroup>
         <Reference Include="Main">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\Main.dll</HintPath>
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\Main.dll</HintPath>
         </Reference>
         <Reference Include="Plugins">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\Plugins.dll</HintPath>
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\Plugins.dll</HintPath>
+        </Reference>
+        <Reference Include="Unity.TextMeshPro">
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\Unity.TextMeshPro.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.CoreModule">
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.ImageConversionModule">
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UI">
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.UI.dll</HintPath>
+        </Reference>
+        <Reference Include="UnityEngine.UIModule">
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
         <Reference Include="System.Core"/>
@@ -44,30 +39,19 @@
         <Reference Include="Microsoft.CSharp"/>
         <Reference Include="System.Data"/>
         <Reference Include="System.Xml"/>
-        <Reference Include="Unity.TextMeshPro">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\Unity.TextMeshPro.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.CoreModule">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.ImageConversionModule">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UI">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\UnityEngine.UI.dll</HintPath>
-        </Reference>
-        <Reference Include="UnityEngine.UIModule">
-            <HintPath>$(ChromapperDir)\ChroMapper_Data\Managed\UnityEngine.UIModule.dll</HintPath>
-        </Reference>
     </ItemGroup>
+
     <ItemGroup>
-        <Compile Include="Options.cs"/>
-        <Compile Include="Selector.cs"/>
-        <Compile Include="Properties\AssemblyInfo.cs"/>
-        <Compile Include="UI\UI.cs"/>
+        <None Include="Directory.Build.props" Condition="Exists('Directory.Build.props')"/>
+        <Content Include="Selector.csproj.user" Condition="Exists('Selector.csproj.user')"/>
     </ItemGroup>
+
     <ItemGroup>
-        <EmbeddedResource Include="Icon.png"/>
+        <EmbeddedResource Include="Resources\Icon.png"/>
     </ItemGroup>
-    <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets"/>
+
+    <Target Name="PostBuild" AfterTargets="PostBuildEvent">
+      <Exec Command="cp -f $(OutDir)$(TargetFileName) $(ChroMapperDir)Plugins/$(TargetFileName)" />
+    </Target>
+
 </Project>
