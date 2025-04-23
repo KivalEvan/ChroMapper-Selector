@@ -2,8 +2,42 @@
 
 namespace Selector;
 
+enum ObjectSelectType
+{
+    Note,
+    Bomb,
+    Arc,
+    Chain,
+    Obstacle,
+    Event,
+}
+
+enum OperationType
+{
+    Range,
+    Additive,
+    NotEqual,
+    Equal,
+    Greater,
+    GreaterOrEqual,
+    Lesser,
+    LesserOrEqual,
+}
+
 internal static class Items
 {
+    internal static readonly List<(OperationType op, string name, bool hasOp2)> TimeOperator =
+    [
+        (OperationType.Range, "Range", true),
+        (OperationType.Additive, "Additive", true),
+        (OperationType.Equal, "Equal", false),
+        (OperationType.NotEqual, "Not", false),
+        (OperationType.Greater, "Greater", false),
+        (OperationType.GreaterOrEqual, "Greater/Equal", false),
+        (OperationType.Lesser, "Lesser", false),
+        (OperationType.LesserOrEqual, "Lesser/Equal", false)
+    ];
+    
     internal static readonly List<(int id, string name)> EventType =
     [
         (0, "Back top"),

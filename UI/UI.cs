@@ -21,7 +21,6 @@ internal class UI
         _main = main;
 
         _extensionBtn.Icon = Utils.LoadSpriteFromResources("Selector.Icon.png");
-        ;
         _extensionBtn.Tooltip = "Selector";
         ExtensionButtons.AddButton(_extensionBtn);
     }
@@ -153,7 +152,7 @@ internal class UI
         AddButton("Select All", new(-275, -5),
             () => { _main.SelectAll(); });
         AddButton("Deselect All", new(-275, -30),
-            () => { _main.DeselectAll(); });
+            () => { Main.DeselectAll(); });
 
         _selectorMenu.SetActive(false);
         _extensionBtn.Click = () => { _selectorMenu.SetActive(!_selectorMenu.activeSelf); };
