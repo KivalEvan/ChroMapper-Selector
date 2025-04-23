@@ -8,13 +8,7 @@ internal static class FilterEventType
 {
     internal static IEnumerable<BaseEvent> Perform(IEnumerable<BaseEvent> ary)
     {
-        if (!Options.EventTypeSelect) return ary;
-        var type = Options.EventType.name switch
-        {
-            "Custom" => Options.EventTypeCustom,
-            _ => Options.EventType.id
-        };
-
-        return ary.Where(obj => obj.Type == type);
+        var id = Options.EventTypeDropdown.name == "Custom" ? Options.EventType.Operand1 : Options.EventTypeDropdown.id;
+        return !Options.EventType.Enabled ? ary : ary.Where(obj => obj.Type == id);
     }
 }

@@ -1,49 +1,49 @@
 ﻿namespace Selector;
 
-enum TimeOperation
+internal struct OptionValue<T>()
 {
-    Until,
-    Additive,
-    Equal,
-    Greater,
-    GreaterOrEqual,
-    Lesser,
-    LesserOrEqual,
+    internal bool Enabled = false;
+    internal T Operand1 = default;
+    internal T Operand2 = default;
+    internal OperationType Operation = OperationType.Equal;
+    internal float Tolerance = 0.001f;
 }
 
 internal static class Options
 {
-    public static bool SelectNote { set; get; } = true;
-    public static bool SelectBomb { set; get; } = false;
-    public static bool SelectEvent { set; get; } = false;
-    public static bool SelectObstacle { set; get; } = false;
-    public static bool SelectArc { set; get; } = false;
-    public static bool SelectChain { set; get; } = false;
+    public static bool SelectNote = true;
+    public static bool SelectBomb = false;
+    public static bool SelectEvent = false;
+    public static bool SelectObstacle = false;
+    public static bool SelectArc = false;
+    public static bool SelectChain = false;
 
-    public static float TimeOperand1 { set; get; } = 0.0f;
-    public static float TimeOperand2 { set; get; } = 999.0f;
-    public static float TimeTolerance { set; get; } = 0.001f;
-    public static bool TimeSelect { set; get; } = true;
-    public static TimeOperation TimeOperator { set; get; } = TimeOperation.Until;
+    public static OptionValue<float> Time = new()
+    {
+        Enabled = true,
+        Operand1 = 4.0f,
+        Operand2 = 4.0f,
+        Operation = OperationType.Additive
+    };
 
-    public static bool GridColorSelect { set; get; } = false;
-    public static bool GridDirectionSelect { set; get; } = false;
-    public static bool GridXSelect { set; get; } = false;
-    public static bool GridYSelect { set; get; } = false;
-    public static (int id, string name) GridColor { set; get; } = Items.NoteColor[0];
-    public static (int id, string name) GridDirection { set; get; } = Items.NoteDirection[0];
-    public static int GridX { set; get; } = 0;
-    public static int GridY { set; get; } = 0;
+    public static OptionValue<int> GridColor = new();
+    public static (int id, string name) GridColorDropdown = Items.NoteColors[0];
 
-    public static bool EventTypeSelect { set; get; } = false;
-    public static bool EventValueColorSelect { set; get; } = false;
-    public static bool EventValueTypeSelect { set; get; } = false;
-    public static bool EventFloatValueSelect { set; get; } = false;
-    public static (int id, string name) EventType { set; get; } = Items.EventType[0];
-    public static int EventTypeCustom { set; get; } = 0;
-    public static (int id, string name) EventValueColor { set; get; } = Items.EventValueColor[0];
-    public static (int id, string name) EventValueType { set; get; } = Items.EventValueType[0];
-    public static int EventValueCustom { set; get; } = 0;
-    public static float EventFloatValue { set; get; } = 1.0f;
-    public static float EventFloatValueTolerance { set; get; } = 0.001f;
+    public static OptionValue<int> GridDirection = new();
+    public static (int id, string name) GridDirectionDropdown = Items.NoteDirections[0];
+
+    public static OptionValue<int> GridX = new();
+    public static OptionValue<int> GridY = new();
+
+    public static (int id, string name) EventTypeDropdown = Items.EventTypes[0];
+    public static OptionValue<int> EventType = new();
+
+    public static (int id, string name) EventValueColorDropdown = Items.EventValueColors[0];
+    public static (int id, string name) EventValueTypeDropdown = Items.EventValueTypes[0];
+    public static OptionValue<int> EventValue = new();
+
+    public static OptionValue<float> EventFloatValue = new()
+    {
+        Operand1 = 1.0f
+    };
 }

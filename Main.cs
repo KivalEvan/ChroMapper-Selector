@@ -1,10 +1,8 @@
-﻿using System;
-using System.Linq;
+﻿using System.Linq;
 using System.Collections.Generic;
 using Beatmap.Base;
-using Beatmap.Enums;
 using Selector.Actions;
-using Selector.UserInterface;
+using Selector.Extensions;
 using UnityEngine.SceneManagement;
 using Object = UnityEngine.Object;
 
@@ -18,7 +16,7 @@ public class Main
     private EventGridContainer _eventGridContainer;
     private NoteGridContainer _noteGridContainer;
     private ObstacleGridContainer _obstacleGridContainer;
-    private UI _ui;
+    private UI.UI _ui;
 
     [Init]
     private void Init()
@@ -70,17 +68,17 @@ public class Main
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(SelectObject);
-        GrabObjects<BaseNote>(ObjectSelectType.Arc)
+        GrabObjects<BaseArc>(ObjectSelectType.Arc)
             .Pipe(FilterTime.Perform)
-            .Pipe(FilterNoteColor.Perform)
-            .Pipe(FilterNoteDirection.Perform)
+            .Pipe(FilterSliderColor.Perform)
+            .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(SelectObject);
-        GrabObjects<BaseNote>(ObjectSelectType.Chain)
+        GrabObjects<BaseChain>(ObjectSelectType.Chain)
             .Pipe(FilterTime.Perform)
-            .Pipe(FilterNoteColor.Perform)
-            .Pipe(FilterNoteDirection.Perform)
+            .Pipe(FilterSliderColor.Perform)
+            .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(SelectObject);
@@ -103,8 +101,8 @@ public class Main
     {
         GrabObjects<BaseNote>(ObjectSelectType.Note).ToList().ForEach(SelectObject);
         GrabObjects<BaseNote>(ObjectSelectType.Bomb).ToList().ForEach(SelectObject);
-        GrabObjects<BaseNote>(ObjectSelectType.Arc).ToList().ForEach(SelectObject);
-        GrabObjects<BaseNote>(ObjectSelectType.Chain).ToList().ForEach(SelectObject);
+        GrabObjects<BaseArc>(ObjectSelectType.Arc).ToList().ForEach(SelectObject);
+        GrabObjects<BaseChain>(ObjectSelectType.Chain).ToList().ForEach(SelectObject);
         GrabObjects<BaseEvent>(ObjectSelectType.Event).ToList().ForEach(SelectObject);
         GrabObjects<BaseObstacle>(ObjectSelectType.Obstacle).ToList().ForEach(SelectObject);
         SelectionController.SelectionChangedEvent?.Invoke();
@@ -125,17 +123,17 @@ public class Main
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(DeselectObject);
-        GrabObjects<BaseNote>(ObjectSelectType.Arc)
+        GrabObjects<BaseArc>(ObjectSelectType.Arc)
             .Pipe(FilterTime.Perform)
-            .Pipe(FilterNoteColor.Perform)
-            .Pipe(FilterNoteDirection.Perform)
+            .Pipe(FilterSliderColor.Perform)
+            .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(DeselectObject);
-        GrabObjects<BaseNote>(ObjectSelectType.Chain)
+        GrabObjects<BaseChain>(ObjectSelectType.Chain)
             .Pipe(FilterTime.Perform)
-            .Pipe(FilterNoteColor.Perform)
-            .Pipe(FilterNoteDirection.Perform)
+            .Pipe(FilterSliderColor.Perform)
+            .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(DeselectObject);

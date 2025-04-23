@@ -1,4 +1,5 @@
 ﻿using System.Collections.Generic;
+using Beatmap.Enums;
 
 namespace Selector;
 
@@ -9,7 +10,7 @@ enum ObjectSelectType
     Arc,
     Chain,
     Obstacle,
-    Event,
+    Event
 }
 
 enum OperationType
@@ -21,24 +22,24 @@ enum OperationType
     Greater,
     GreaterOrEqual,
     Lesser,
-    LesserOrEqual,
+    LesserOrEqual
 }
 
 internal static class Items
 {
-    internal static readonly List<(OperationType op, string name, bool hasOp2)> TimeOperator =
+    internal static readonly List<(OperationType op, string name, bool hasOp2)> Operators =
     [
-        (OperationType.Range, "Range", true),
         (OperationType.Additive, "Additive", true),
-        (OperationType.Equal, "Equal", false),
-        (OperationType.NotEqual, "Not", false),
-        (OperationType.Greater, "Greater", false),
-        (OperationType.GreaterOrEqual, "Greater/Equal", false),
-        (OperationType.Lesser, "Lesser", false),
-        (OperationType.LesserOrEqual, "Lesser/Equal", false)
+        (OperationType.Range, "Range", true),
+        (OperationType.Equal, "==", false),
+        (OperationType.NotEqual, "!=", false),
+        (OperationType.Greater, ">", false),
+        (OperationType.GreaterOrEqual, ">=", false),
+        (OperationType.Lesser, "<", false),
+        (OperationType.LesserOrEqual, "<=", false)
     ];
     
-    internal static readonly List<(int id, string name)> EventType =
+    internal static readonly List<(int id, string name)> EventTypes =
     [
         (0, "Back top"),
         (1, "Ring"),
@@ -68,8 +69,9 @@ internal static class Items
         (-1, "Custom")
     ];
 
-    internal static readonly List<(int id, string name)> EventValueColor =
+    internal static readonly List<(int id, string name)> EventValueColors =
     [
+        (0, "Off"),
         (1, "Blue"),
         (5, "Red"),
         (9, "White"),
@@ -77,22 +79,21 @@ internal static class Items
         (-1, "Custom")
     ];
 
-    internal static readonly List<(int id, string name)> EventValueType =
+    internal static readonly List<(int id, string name)> EventValueTypes =
     [
-        (-1, "Off"),
         (0, "On"),
         (1, "Flash"),
         (2, "Fade"),
         (3, "Transition")
     ];
 
-    internal static readonly List<(int id, string name)> NoteColor =
+    internal static readonly List<(int id, string name)> NoteColors =
     [
-        (0, "Blue"),
-        (1, "Red")
+        ((int)NoteColor.Blue, "Blue"),
+        ((int)NoteColor.Red, "Red")
     ];
 
-    internal static readonly List<(int id, string name)> NoteDirection =
+    internal static readonly List<(int id, string name)> NoteDirections =
     [
         (0, "Up"),
         (1, "Down"),

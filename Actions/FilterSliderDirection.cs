@@ -4,9 +4,9 @@ using Beatmap.Base;
 
 namespace Selector.Actions;
 
-internal static class FilterNoteDirection
+internal static class FilterSliderDirection
 {
-    internal static IEnumerable<T> Perform<T>(IEnumerable<T> ary) where T : BaseNote
+    internal static IEnumerable<T> Perform<T>(IEnumerable<T> ary) where T : BaseSlider
     {
         if (!Options.GridDirection.Enabled) return ary;
         var id = Options.GridDirectionDropdown.name == "Custom"
@@ -16,8 +16,8 @@ internal static class FilterNoteDirection
         return Options.GridDirectionDropdown.name switch
         {
             "Unknown" => ary.Where(obj => obj.CutDirection < 0 || obj.CutDirection > 8),
-            "ME" => ary.Where(obj =>
-                obj.CutDirection >= 1000 && obj.CutDirection <= 1360),
+            "ME" => ary.Where(obj => (obj.CutDirection >= 1000 && obj.CutDirection <= 1360) ||
+                                     (obj.CutDirection >= 2000 && obj.CutDirection <= 2360)),
             _ => ary.Where(obj => obj.CutDirection == id)
         };
     }

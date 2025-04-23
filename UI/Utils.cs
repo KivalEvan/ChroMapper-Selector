@@ -1,7 +1,7 @@
 using System.Reflection;
 using UnityEngine;
 
-namespace Selector;
+namespace Selector.UI;
 
 internal static class Utils
 {

@@ -8,24 +8,25 @@ internal static class FilterEventValue
 {
     internal static IEnumerable<BaseEvent> Perform(IEnumerable<BaseEvent> ary)
     {
-        if (Options.EventValueColorSelect)
+        if (!Options.EventValue.Enabled) return ary;
+        
         {
-            ary = Options.EventValueColor.name switch
+            ary = Options.EventValueColorDropdown.name switch
             {
+                "Off" => ary.Where(obj => obj.IsOff),
                 "Blue" => ary.Where(obj => obj.IsBlue),
                 "Red" => ary.Where(obj => obj.IsRed),
                 "White" => ary.Where(obj => obj.IsWhite),
                 "Unknown" => ary.Where(obj => obj.Value < 0 || obj.Value > 12),
-                "Custom" => ary.Where(obj => obj.Value == Options.EventValueCustom),
+                "Custom" => ary.Where(obj => obj.Value == Options.EventValue.Operand1),
                 _ => ary
             };
         }
 
-        if (Options.EventValueTypeSelect)
+        if (Options.EventValue.Enabled && Options.EventValueColorDropdown.name != "Custom")
         {
-            ary = Options.EventValueType.name switch
+            ary = Options.EventValueTypeDropdown.name switch
             {
-                "Off" => ary.Where(obj => obj.IsOff),
                 "On" => ary.Where(obj => obj.IsOn),
                 "Flash" => ary.Where(obj => obj.IsFlash),
                 "Fade" => ary.Where(obj => obj.IsFade),

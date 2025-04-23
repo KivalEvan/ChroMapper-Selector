@@ -8,6 +8,6 @@ internal static class FilterGridY
 {
     internal static IEnumerable<T> Perform<T>(IEnumerable<T> ary) where T : BaseGrid
     {
-        return !Options.GridYSelect ? ary : ary.Where(o => o.PosY == Options.GridY);
+        return !Options.GridY.Enabled ? ary : ary.Where(o => o.PosY == Options.GridY.Operand1);
     }
 }

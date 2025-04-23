@@ -2,7 +2,6 @@ using System;
 using System.Collections.Generic;
 using System.Linq;
 using Beatmap.Base;
-using UnityEngine;
 
 namespace Selector.Actions;
 
@@ -13,11 +12,11 @@ internal static class FilterTime
 
     internal static IEnumerable<T> Perform<T>(IEnumerable<T> ary) where T : BaseObject
     {
-        if (!Options.TimeSelect) return ary;
-        _adjustTimeOp1 = Options.TimeOperand1;
-        _adjustTimeOp2 = Options.TimeOperand2;
+        if (!Options.Time.Enabled) return ary;
+        _adjustTimeOp1 = Options.Time.Operand1;
+        _adjustTimeOp2 = Options.Time.Operand2;
 
-        Func<BaseObject, bool> action = Options.TimeOperator switch
+        Func<BaseObject, bool> action = Options.Time.Operation switch
         {
             OperationType.Range => OpRange,
             OperationType.Additive => OpAdditive,
@@ -35,17 +34,17 @@ internal static class FilterTime
     
     private static bool OpRange<T>(T obj) where T : BaseObject
     {
-        return obj.JsonTime >= _adjustTimeOp1 - Options.TimeTolerance && obj.JsonTime <= _adjustTimeOp2 + Options.TimeTolerance;
+        return obj.JsonTime >= _adjustTimeOp1 - Options.Time.Tolerance && obj.JsonTime <= _adjustTimeOp2 + Options.Time.Tolerance;
     }
     
     private static bool OpAdditive<T>(T obj) where T : BaseObject
     {
-        return obj.JsonTime >= _adjustTimeOp1 - Options.TimeTolerance && obj.JsonTime <= _adjustTimeOp1 + _adjustTimeOp2 + Options.TimeTolerance;
+        return obj.JsonTime >= _adjustTimeOp1 - Options.Time.Tolerance && obj.JsonTime <= _adjustTimeOp1 + _adjustTimeOp2 + Options.Time.Tolerance;
     }
     
     private static bool OpEqual<T>(T obj) where T : BaseObject
     {
-        return Math.Abs(obj.JsonTime - _adjustTimeOp1) <= Options.TimeTolerance;
+        return Math.Abs(obj.JsonTime - _adjustTimeOp1) <= Options.Time.Tolerance;
     }
     
     private static bool OpNotEqual<T>(T obj) where T : BaseObject

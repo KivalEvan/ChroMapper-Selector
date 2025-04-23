@@ -1,7 +1,7 @@
 using System;
 using System.Collections.Generic;
 
-namespace Selector;
+namespace Selector.Extensions;
 
 internal static class IEnumerableExtensions
 {
