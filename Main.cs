@@ -57,6 +57,7 @@ public class Main
     {
         GrabObjects<BaseNote>(ObjectSelectType.Note)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterNoteColor.Perform)
             .Pipe(FilterNoteDirection.Perform)
             .Pipe(FilterGridX.Perform)
@@ -64,12 +65,14 @@ public class Main
             .ToList().ForEach(SelectObject);
         GrabObjects<BaseNote>(ObjectSelectType.Bomb)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterNoteDirection.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(SelectObject);
         GrabObjects<BaseArc>(ObjectSelectType.Arc)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterSliderColor.Perform)
             .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
@@ -77,6 +80,7 @@ public class Main
             .ToList().ForEach(SelectObject);
         GrabObjects<BaseChain>(ObjectSelectType.Chain)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterSliderColor.Perform)
             .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
@@ -84,12 +88,14 @@ public class Main
             .ToList().ForEach(SelectObject);
         GrabObjects<BaseEvent>(ObjectSelectType.Event)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterEventType.Perform)
             .Pipe(FilterEventValue.Perform)
             .Pipe(FilterEventFloatValue.Perform)
             .ToList().ForEach(SelectObject);
         GrabObjects<BaseObstacle>(ObjectSelectType.Obstacle)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(SelectObject);
@@ -112,6 +118,7 @@ public class Main
     {
         GrabObjects<BaseNote>(ObjectSelectType.Note)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterNoteColor.Perform)
             .Pipe(FilterNoteDirection.Perform)
             .Pipe(FilterGridX.Perform)
@@ -119,12 +126,14 @@ public class Main
             .ToList().ForEach(DeselectObject);
         GrabObjects<BaseNote>(ObjectSelectType.Bomb)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterNoteDirection.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(DeselectObject);
         GrabObjects<BaseArc>(ObjectSelectType.Arc)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterSliderColor.Perform)
             .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
@@ -132,6 +141,7 @@ public class Main
             .ToList().ForEach(DeselectObject);
         GrabObjects<BaseChain>(ObjectSelectType.Chain)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterSliderColor.Perform)
             .Pipe(FilterSliderDirection.Perform)
             .Pipe(FilterGridX.Perform)
@@ -139,12 +149,14 @@ public class Main
             .ToList().ForEach(DeselectObject);
         GrabObjects<BaseEvent>(ObjectSelectType.Event)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterEventType.Perform)
             .Pipe(FilterEventValue.Perform)
             .Pipe(FilterEventFloatValue.Perform)
             .ToList().ForEach(DeselectObject);
         GrabObjects<BaseObstacle>(ObjectSelectType.Obstacle)
             .Pipe(FilterTime.Perform)
+            .Pipe(FilterCustomData.Perform)
             .Pipe(FilterGridX.Perform)
             .Pipe(FilterGridY.Perform)
             .ToList().ForEach(DeselectObject);

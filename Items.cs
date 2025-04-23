@@ -25,6 +25,13 @@ enum OperationType
     LesserOrEqual
 }
 
+enum CustomDataSelectType
+{
+    Any,
+    None,
+    Exist
+}
+
 internal static class Items
 {
     internal static readonly List<(OperationType op, string name, bool hasOp2)> Operators =
@@ -38,7 +45,14 @@ internal static class Items
         (OperationType.Lesser, "<", false),
         (OperationType.LesserOrEqual, "<=", false)
     ];
-    
+
+    internal static readonly List<(CustomDataSelectType type, string name)> CustomDataSelect =
+    [
+        (CustomDataSelectType.Any, "Any"),
+        (CustomDataSelectType.None, "None"),
+        (CustomDataSelectType.Exist, "Exist")
+    ];
+
     internal static readonly List<(int id, string name)> EventTypes =
     [
         (0, "Back top"),

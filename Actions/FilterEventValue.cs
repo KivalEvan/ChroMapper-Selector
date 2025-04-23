@@ -9,7 +9,7 @@ internal static class FilterEventValue
     internal static IEnumerable<BaseEvent> Perform(IEnumerable<BaseEvent> ary)
     {
         if (!Options.EventValue.Enabled) return ary;
-        
+
         {
             ary = Options.EventValueColorDropdown.name switch
             {
@@ -23,7 +23,9 @@ internal static class FilterEventValue
             };
         }
 
-        if (Options.EventValue.Enabled && Options.EventValueColorDropdown.name != "Custom")
+        if (Options.EventValue.Enabled &&
+            Options.EventValueColorDropdown.name != "Unknown" &&
+            Options.EventValueColorDropdown.name != "Custom")
         {
             ary = Options.EventValueTypeDropdown.name switch
             {

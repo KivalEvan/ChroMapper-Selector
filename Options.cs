@@ -17,6 +17,8 @@ internal static class Options
     public static bool SelectObstacle = false;
     public static bool SelectArc = false;
     public static bool SelectChain = false;
+    
+    public static CustomDataSelectType CustomDataSelect = CustomDataSelectType.Any;
 
     public static OptionValue<float> Time = new()
     {

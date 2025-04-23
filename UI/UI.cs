@@ -30,7 +30,7 @@ internal class UI
         _selectorMenu = new("Select Menu");
         _selectorMenu.transform.parent = parent.transform;
 
-        AttachTransform(_selectorMenu, 300, 175, 1, 1, 0, 0, 1, 1);
+        AttachTransform(_selectorMenu, 300, 195, 1, 1, 0, 0, 1, 1);
 
         var image = _selectorMenu.AddComponent<Image>();
         image.sprite = PersistentUI.Instance.Sprites.Background;
@@ -74,75 +74,77 @@ internal class UI
             Items.Operators.Select(x => x.name), value => { Options.Time.Operation = Items.Operators[value].op; });
         AddCheckbox("Time (Beat)", new(-220, -55),
             Options.Time.Enabled, check => { Options.Time.Enabled = check; });
+        AddDropdown("Custom Data", new(-145, -75),
+            Items.CustomDataSelect.Select(x => x.name), value => { Options.CustomDataSelect = Items.CustomDataSelect[value].type; });
 
-        AddLabel("Grid", new(-55, -75));
-        AddDropdown("", new(-5, -90),
-            Items.NoteColors.Select(x => x.name), value => { Options.GridColorDropdown = Items.NoteColors[value]; });
-        AddCheckbox("Color", new(-80, -90),
-            Options.GridColor.Enabled, check => { Options.GridColor.Enabled = check; });
+        AddLabel("Grid", new(-55, -95));
         AddDropdown("", new(-5, -110),
+            Items.NoteColors.Select(x => x.name), value => { Options.GridColorDropdown = Items.NoteColors[value]; });
+        AddCheckbox("Color", new(-80, -110),
+            Options.GridColor.Enabled, check => { Options.GridColor.Enabled = check; });
+        AddDropdown("", new(-5, -130),
             Items.NoteDirections.Select(x => x.name),
             value => { Options.GridDirectionDropdown = Items.NoteDirections[value]; });
-        AddCheckbox("Direction", new(-80, -110),
+        AddCheckbox("Direction", new(-80, -130),
             Options.GridDirection.Enabled, check => { Options.GridDirection.Enabled = check; });
-        AddTextInput("", new(-42.5f, -130),
+        AddTextInput("", new(-42.5f, -150),
             Options.GridX.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
                     Options.GridX.Operand1 = res;
             });
-        AddCheckbox("X", new(-80, -130),
+        AddCheckbox("X", new(-80, -150),
             Options.GridX.Enabled, check => { Options.GridX.Enabled = check; });
-        AddTextInput("", new(-42.5f, -150),
+        AddTextInput("", new(-42.5f, -170),
             Options.GridY.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
                     Options.GridY.Operand1 = res;
             });
-        AddCheckbox("Y", new(-80, -150),
+        AddCheckbox("Y", new(-80, -170),
             Options.GridY.Enabled, check => { Options.GridY.Enabled = check; });
 
-        AddLabel("Event", new(-230, -75));
-        AddDropdown("", new(-175, -90),
+        AddLabel("Event", new(-230, -95));
+        AddDropdown("", new(-175, -110),
             Items.EventTypes.Select(x => x.name), value => { Options.EventTypeDropdown = Items.EventTypes[value]; });
-        AddTextInput("", new(-137.5f, -90),
+        AddTextInput("", new(-137.5f, -110),
             Options.EventType.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
                     Options.EventType.Operand1 = res;
             });
-        AddCheckbox("Type", new(-250, -90),
+        AddCheckbox("Type", new(-250, -110),
             Options.EventType.Enabled, check => { Options.EventType.Enabled = check; });
-        AddDropdown("", new(-175, -110),
+        AddDropdown("", new(-175, -130),
             Items.EventValueColors.Select(x => x.name),
             value => { Options.EventValueColorDropdown = Items.EventValueColors[value]; });
-        AddTextInput("", new(-137.5f, -110),
+        AddTextInput("", new(-137.5f, -130),
             Options.EventValue.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
                     Options.EventValue.Operand1 = res;
             });
-        AddDropdown("", new(-175, -130),
+        AddDropdown("", new(-175, -150),
             Items.EventValueTypes.Select(x => x.name),
             value => { Options.EventValueTypeDropdown = Items.EventValueTypes[value]; });
-        AddCheckbox("Value", new(-250, -110),
+        AddCheckbox("Value", new(-250, -130),
             Options.EventValue.Enabled, check => { Options.EventValue.Enabled = check; });
         AddTextInput("±",
-            new(-165, -150),
+            new(-165, -170),
             Options.EventFloatValue.Tolerance.ToString(CultureInfo.InvariantCulture), value =>
             {
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
                         out var res))
                     Options.EventFloatValue.Tolerance = res;
             });
-        AddTextInput("", new(-212.5f, -150),
+        AddTextInput("", new(-212.5f, -170),
             Options.EventFloatValue.Operand1.ToString(CultureInfo.InvariantCulture), value =>
             {
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
                         out var res))
                     Options.EventFloatValue.Operand1 = res;
             });
-        AddCheckbox("Float", new(-250, -150),
+        AddCheckbox("Float", new(-250, -170),
             Options.EventFloatValue.Enabled, check => { Options.EventFloatValue.Enabled = check; });
 
         AddButton("Select", new(-135, -5),
@@ -253,7 +255,7 @@ internal class UI
             var entryLabel = new GameObject(text + " Label", typeof(TextMeshProUGUI));
             var rectTransform = (RectTransform)entryLabel.transform;
             rectTransform.SetParent(_selectorMenu.transform);
-            MoveTransform(rectTransform, 60, 16, 1, 1, pos.x - 100, pos.y - 2);
+            MoveTransform(rectTransform, 60, 16, 1, 1, pos.x - 65, pos.y - 2);
             var textComponent = entryLabel.GetComponent<TextMeshProUGUI>();
 
             textComponent.name = text;
