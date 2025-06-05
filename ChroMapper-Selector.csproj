@@ -1,13 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     
     <PropertyGroup>
-        <ProjectGuid>{7C003883-75FA-41E2-9A67-95195FB9FE68}</ProjectGuid>
         <OutputType>Library</OutputType>
         <RootNamespace>Selector</RootNamespace>
         <AssemblyName>Selector</AssemblyName>
         <TargetFramework>net48</TargetFramework>
         <LangVersion>13</LangVersion>
         <Nullable>warnings</Nullable>
+        <AssemblyVersion>1.3.1</AssemblyVersion>
+        <FileVersion>1.3.1</FileVersion>
+        <IsPackable>false</IsPackable>
     </PropertyGroup>
     
     <ItemGroup>
@@ -20,16 +22,19 @@
         <Reference Include="Unity.TextMeshPro">
             <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\Unity.TextMeshPro.dll</HintPath>
         </Reference>
+        <Reference Include="Unity.InputSystem">
+            <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\Unity.InputSystem.dll</HintPath>
+        </Reference>
         <Reference Include="UnityEngine.CoreModule">
             <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.CoreModule.dll</HintPath>
         </Reference>
         <Reference Include="UnityEngine.ImageConversionModule">
             <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.ImageConversionModule.dll</HintPath>
         </Reference>
-        <Reference Include="UnityEngine.UI">
+        <Reference Include="UnityEngine.UI" Publicize="True">
             <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.UI.dll</HintPath>
         </Reference>
-        <Reference Include="UnityEngine.UIModule">
+        <Reference Include="UnityEngine.UIModule" Publicize="True">
             <HintPath>$(ChroMapperDir)\ChroMapper_Data\Managed\UnityEngine.UIModule.dll</HintPath>
         </Reference>
         <Reference Include="System"/>
@@ -48,6 +53,13 @@
 
     <ItemGroup>
         <EmbeddedResource Include="Resources\Icon.png"/>
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="BepInEx.AssemblyPublicizer.MSBuild" Version="0.5.0-beta.1">
+        <PrivateAssets>all</PrivateAssets>
+        <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
+      </PackageReference>
     </ItemGroup>
 
     <Target Name="PostBuild" AfterTargets="PostBuildEvent">

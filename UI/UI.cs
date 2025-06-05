@@ -4,6 +4,8 @@ using System.Linq;
 using TMPro;
 using UnityEngine;
 using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using UnityEngine.InputSystem;
 using UnityEngine.UI;
 using static System.String;
 
@@ -50,7 +52,7 @@ internal class UI
         AddCheckbox("Chain", new(-65, -35),
             Options.SelectChain, check => { Options.SelectChain = check; });
 
-        AddTextInput("±",
+        AddNumberInput("±",
             new(-5, -55),
             Options.Time.Tolerance.ToString(CultureInfo.InvariantCulture), value =>
             {
@@ -58,13 +60,13 @@ internal class UI
                         out var res))
                     Options.Time.Tolerance = res;
             });
-        AddTextInput("op", new(-52.5f, -55),
+        AddNumberInput("op", new(-52.5f, -55),
             Options.Time.Operand2.ToString(CultureInfo.InvariantCulture), value =>
             {
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
                         out var res)) Options.Time.Operand2 = res;
             });
-        AddTextInput("", new(-105, -55),
+        AddNumberInput("", new(-105, -55),
             Options.Time.Operand1.ToString(CultureInfo.InvariantCulture), value =>
             {
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
@@ -75,7 +77,8 @@ internal class UI
         AddCheckbox("Time (Beat)", new(-220, -55),
             Options.Time.Enabled, check => { Options.Time.Enabled = check; });
         AddDropdown("Custom Data", new(-145, -75),
-            Items.CustomDataSelect.Select(x => x.name), value => { Options.CustomDataSelect = Items.CustomDataSelect[value].type; });
+            Items.CustomDataSelect.Select(x => x.name),
+            value => { Options.CustomDataSelect = Items.CustomDataSelect[value].type; });
 
         AddLabel("Grid", new(-55, -95));
         AddDropdown("", new(-5, -110),
@@ -87,7 +90,7 @@ internal class UI
             value => { Options.GridDirectionDropdown = Items.NoteDirections[value]; });
         AddCheckbox("Direction", new(-80, -130),
             Options.GridDirection.Enabled, check => { Options.GridDirection.Enabled = check; });
-        AddTextInput("", new(-42.5f, -150),
+        AddNumberInput("", new(-42.5f, -150),
             Options.GridX.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
@@ -95,7 +98,7 @@ internal class UI
             });
         AddCheckbox("X", new(-80, -150),
             Options.GridX.Enabled, check => { Options.GridX.Enabled = check; });
-        AddTextInput("", new(-42.5f, -170),
+        AddNumberInput("", new(-42.5f, -170),
             Options.GridY.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
@@ -107,7 +110,7 @@ internal class UI
         AddLabel("Event", new(-230, -95));
         AddDropdown("", new(-175, -110),
             Items.EventTypes.Select(x => x.name), value => { Options.EventTypeDropdown = Items.EventTypes[value]; });
-        AddTextInput("", new(-137.5f, -110),
+        AddNumberInput("", new(-137.5f, -110),
             Options.EventType.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
@@ -118,7 +121,7 @@ internal class UI
         AddDropdown("", new(-175, -130),
             Items.EventValueColors.Select(x => x.name),
             value => { Options.EventValueColorDropdown = Items.EventValueColors[value]; });
-        AddTextInput("", new(-137.5f, -130),
+        AddNumberInput("", new(-137.5f, -130),
             Options.EventValue.Operand1.ToString(), value =>
             {
                 if (int.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat, out var res))
@@ -129,7 +132,7 @@ internal class UI
             value => { Options.EventValueTypeDropdown = Items.EventValueTypes[value]; });
         AddCheckbox("Value", new(-250, -130),
             Options.EventValue.Enabled, check => { Options.EventValue.Enabled = check; });
-        AddTextInput("±",
+        AddNumberInput("±",
             new(-165, -170),
             Options.EventFloatValue.Tolerance.ToString(CultureInfo.InvariantCulture), value =>
             {
@@ -137,7 +140,7 @@ internal class UI
                         out var res))
                     Options.EventFloatValue.Tolerance = res;
             });
-        AddTextInput("", new(-212.5f, -170),
+        AddNumberInput("", new(-212.5f, -170),
             Options.EventFloatValue.Operand1.ToString(CultureInfo.InvariantCulture), value =>
             {
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
@@ -188,7 +191,7 @@ internal class UI
         textComponent.text = text;
     }
 
-    private void AddTextInput(string text, Vector2 pos, string value,
+    private void AddNumberInput(string text, Vector2 pos, string value,
         UnityAction<string> onChange)
     {
         if (!IsNullOrEmpty(text))
@@ -215,6 +218,16 @@ internal class UI
         textInput.InputField.textComponent.alignment = TextAlignmentOptions.Left;
         textInput.InputField.textComponent.fontSize = 10;
         textInput.InputField.onValueChanged.AddListener(onChange);
+
+        var inputScroll = textInput.gameObject.AddComponent<ScrollableInput>();
+        inputScroll.OnScrollAction = scroll =>
+        {
+            if (float.TryParse(textInput.InputField.text, NumberStyles.Float, CultureInfo.InvariantCulture,
+                    out var val))
+            {
+                textInput.InputField.text = (val + scroll).ToString(CultureInfo.InvariantCulture);
+            }
+        };
     }
 
     private void AddCheckbox(string text, Vector2 pos, bool value,
