@@ -66,7 +66,7 @@ internal class UI
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
                         out var res)) Options.Time.Operand2 = res;
             });
-        AddNumberInput("", new(-105, -55),
+        var timeInput = AddNumberInput("", new(-105, -55),
             Options.Time.Operand1.ToString(CultureInfo.InvariantCulture), value =>
             {
                 if (float.TryParse(value, NumberStyles.Float, CultureInfo.InvariantCulture.NumberFormat,
@@ -76,7 +76,12 @@ internal class UI
             Items.Operators.Select(x => x.name), value => { Options.Time.Operation = Items.Operators[value].op; });
         AddCheckbox("Time (Beat)", new(-220, -55),
             Options.Time.Enabled, check => { Options.Time.Enabled = check; });
-        AddDropdown("Custom Data", new(-145, -75),
+        AddButton("Get Current", new(-215, -72.5f), () =>
+        {
+            Options.Time.Operand1 = _main.Atsc.CurrentJsonTime;
+            timeInput.InputField.text = Options.Time.Operand1.ToString(CultureInfo.InvariantCulture);
+        });
+        AddDropdown("Custom Data", new(-5, -75),
             Items.CustomDataSelect.Select(x => x.name),
             value => { Options.CustomDataSelect = Items.CustomDataSelect[value].type; });
 
@@ -191,7 +196,7 @@ internal class UI
         textComponent.text = text;
     }
 
-    private void AddNumberInput(string text, Vector2 pos, string value,
+    private UITextInput AddNumberInput(string text, Vector2 pos, string value,
         UnityAction<string> onChange)
     {
         if (!IsNullOrEmpty(text))
@@ -228,6 +233,8 @@ internal class UI
                 textInput.InputField.text = (val + scroll).ToString(CultureInfo.InvariantCulture);
             }
         };
+
+        return textInput;
     }
 
     private void AddCheckbox(string text, Vector2 pos, bool value,

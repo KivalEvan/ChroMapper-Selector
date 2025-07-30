@@ -17,6 +17,8 @@ public class Main
     private NoteGridContainer _noteGridContainer;
     private ObstacleGridContainer _obstacleGridContainer;
     private UI.UI _ui;
+    
+    public AudioTimeSyncController Atsc;
 
     [Init]
     private void Init()
@@ -38,6 +40,7 @@ public class Main
         _obstacleGridContainer = Object.FindObjectOfType<ObstacleGridContainer>();
         _arcGridContainer = Object.FindObjectOfType<ArcGridContainer>();
         _chainsGridContainer = Object.FindObjectOfType<ChainGridContainer>();
+        Atsc = Object.FindObjectOfType<AudioTimeSyncController>();
 
         var mapEditorUI = Object.FindObjectOfType<MapEditorUI>();
         _ui.AddMenu(mapEditorUI);
